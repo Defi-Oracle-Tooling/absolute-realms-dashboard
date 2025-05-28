@@ -172,7 +172,7 @@ cat > package.json << 'EOF'
   "scripts": {
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
-    "test": "jest",
+    "test": "vitest",
     "e2e": "cypress run"
   }
 }
@@ -180,8 +180,8 @@ EOF
 log "Created package.json for $PROJECT_NAME"
  
 # Install and configure linting and formatting tools
-log "Installing dev dependencies: ESLint, Prettier, Jest, Cypress"
-pnpm add -D eslint prettier eslint-config-prettier eslint-plugin-prettier jest cypress
+log "Installing dev dependencies: ESLint, Prettier, Vitest, Cypress"
+pnpm add -D eslint prettier eslint-config-prettier eslint-plugin-prettier vitest vite cypress
 log "Installed dev dependencies"
  
 # Create ESLint config
