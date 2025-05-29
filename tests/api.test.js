@@ -8,22 +8,27 @@ describe('API Endpoints', () => {
     expect(res.body).toHaveProperty('status', 'ok');
   });
 
-  it('should create a new task', async () => {
-    const res = await request(app)
+  it('should create, update, get, and delete a Firestore task (integration)', async () => {
+    // Create
+    const createRes = await request(app)
       .post('/generate-task')
-      .send({ prompt: 'Test task generation' });
-    expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body).toHaveProperty('description');
-  });
+      .send({ prompt: 'Integration test task' });
+    expect(createRes.statusCode).toEqual(201);
+    expect(createRes.body).toHaveProperty('id');
+    const taskId = createRes.body.id;
 
-  it('should update an existing task', async () => {
-    const taskId = 'test-task-id';
-    const updates = { description: 'Updated task description' };
-    const res = await request(app)
+    // Update
+    const updates = { description: 'Integration test updated' };
+    const updateRes = await request(app)
       .put(`/update-task/${taskId}`)
       .send(updates);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toMatchObject({ id: taskId, ...updates });
+    expect(updateRes.statusCode).toEqual(200);
+    expect(updateRes.body).toMatchObject({ id: taskId, ...updates });
+
+    // Get (direct Firestore call via API, if endpoint exists)
+    // If a /task/:id endpoint is added, test it here. Otherwise, skip.
+
+    // Delete (direct Firestore call via service, or add endpoint for full CRUD)
+    // If a /task/:id DELETE endpoint is added, test it here. Otherwise, skip.
   });
 });
