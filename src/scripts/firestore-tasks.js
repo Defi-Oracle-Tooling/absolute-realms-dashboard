@@ -1,39 +1,48 @@
-// Firestore integration for frontend task management
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+// Firestore integration for frontend task management (dynamic import for bundle splitting)
 import { firebaseConfig } from '../../config/firebase-config.js';
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const tasksCol = collection(db, 'tasks');
+let app, db, tasksCol;
 
-// List all tasks and render to sidebar
+async function ensureFirebase() {
+  if (!app) {
+    const { initializeApp } = await import('firebase/app');
+    app = initializeApp(firebaseConfig);
+    const { getFirestore, collection } = await import('firebase/firestore');
+    db = getFirestore(app);
+    tasksCol = collection(db, 'tasks');
+  }
+  return { db, tasksCol };
+}
+
 export async function listTasks() {
+  await ensureFirebase();
+  const { getDocs } = await import('firebase/firestore');
   const snapshot = await getDocs(tasksCol);
   const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  // Dispatch event for sidebar to render
   document.dispatchEvent(new CustomEvent('tasks:list', { detail: tasks }));
   return tasks;
 }
 
-// Add a new task
 export async function addTask(task) {
+  await ensureFirebase();
+  const { addDoc } = await import('firebase/firestore');
   const docRef = await addDoc(tasksCol, task);
   await listTasks();
   return docRef.id;
 }
 
-// Update a task
 export async function updateTask(id, updates) {
+  await ensureFirebase();
+  const { updateDoc, doc } = await import('firebase/firestore');
   await updateDoc(doc(tasksCol, id), updates);
   await listTasks();
 }
 
-// Delete a task
 export async function deleteTask(id) {
+  await ensureFirebase();
+  const { deleteDoc, doc } = await import('firebase/firestore');
   await deleteDoc(doc(tasksCol, id));
   await listTasks();
 }
 
-// On load, list tasks
 window.addEventListener('DOMContentLoaded', listTasks);
