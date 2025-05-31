@@ -1,13 +1,21 @@
-// MSAL (Azure AD) configuration stub
 // MSAL (Azure AD) configuration
+const isNode = typeof window === 'undefined';
 export const msalConfig = {
   auth: {
     clientId: process.env.MSAL_CLIENT_ID || '',
     authority: process.env.MSAL_AUTHORITY || '',
-    redirectUri: typeof window !== 'undefined' ? window.location.origin : process.env.REDIRECT_URI || 'http://localhost:3000'
+    ...(isNode
+      ? { clientSecret: process.env.MSAL_CLIENT_SECRET || '' }
+      : { redirectUri: window.location.origin }
+    )
   },
-  cache: {
-    cacheLocation: 'localStorage',
-    storeAuthStateInCookie: false
-  }
+  ...(isNode
+    ? {}
+    : {
+      cache: {
+        cacheLocation: 'localStorage',
+        storeAuthStateInCookie: false
+      }
+    }
+  )
 };
