@@ -19,4 +19,5 @@
 
 - Build: `pnpm build`
 - Docker: `docker-compose up` or deploy to Azure Static Web Apps
-- CI/CD: On push/PR, GitHub Actions runs lint, test, build, E2E
+- GitHub Secret: add `AZURE_STATIC_WEB_APPS_API_TOKEN` (Settings → Secrets) with your Static Web App deployment token
+- CI/CD: On push/PR, GitHub Actions runs lint, test, build, E2E, then deploy to Azure Static Web Apps via `deploy_static_web_app.yml`

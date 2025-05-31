@@ -15,6 +15,8 @@ app.get('/', (req, res) => res.json({ status: 'ok' }));
 app.use('/auth', require('./auth'));
 app.use('/generate-task', require('./generate-task'));
 app.use('/update-task', require('./update-task'));
+// CRUD for tasks
+app.use('/tasks', require('./tasks'));
 
 // 404 handler
 app.use((req, res) => res.status(404).json({ error: 'Not Found' }));

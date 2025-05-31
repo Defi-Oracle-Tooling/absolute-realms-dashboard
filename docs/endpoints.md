@@ -41,3 +41,46 @@
     "description": "string"
   }
   ```
+
+## Tasks CRUD
+
+### List Tasks
+**GET** `/tasks`
+
+- **Description**: Retrieves all tasks.
+- **Response**:
+  ```json
+  [
+    {
+      "id": "string",
+      "prompt": "string",
+      "description": "string",
+      "createdAt": "string"
+    }
+  ]
+  ```
+
+### Get Task
+**GET** `/tasks/:id`
+
+- **Description**: Retrieves a single task by ID.
+- **Response**:
+  ```json
+  {
+    "id": "string",
+    "prompt": "string",
+    "description": "string",
+    "createdAt": "string"
+  }
+  ```
+
+### Delete Task
+**DELETE** `/tasks/:id`
+
+- **Description**: Deletes a task by ID.
+- **Response**:
+  ```json
+  {
+    "id": "string"
+  }
+  ```
