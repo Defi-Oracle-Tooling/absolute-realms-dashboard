@@ -1,0 +1,40 @@
+# Azure Developer CLI configuration for Absolute Realms Dashboard
+name: absolute-realms-dashboard
+metadata:
+  template: azure.yaml@v2
+services:
+  dashboard-backend:
+    project: ./api
+    language: js
+    host: appservice
+    port: 3000
+    env:
+      AZURE_COSMOS_ENDPOINT: ""
+      AZURE_COSMOS_KEY: ""
+      AZURE_COSMOS_DATABASE_ID: "tasks-db"
+      AZURE_COSMOS_CONTAINER_ID: "tasks"
+      AZURE_AI_FOUNDRY_ENDPOINT: ""
+      AZURE_AI_FOUNDRY_KEY: ""
+      AZURE_AI_FOUNDRY_DEPLOYMENT_NAME: "gpt-task-gen"
+      MSAL_CLIENT_ID: ""
+      MSAL_AUTHORITY: ""
+      MSAL_CLIENT_SECRET: ""
+      API_SCOPE: ""
+      REDIRECT_URI: ""
+      PORT: "3000"
+dependencies:
+  cosmos-db:
+    service: azurecosmosdb
+    connection: secret
+    env:
+      - AZURE_COSMOS_ENDPOINT
+      - AZURE_COSMOS_KEY
+      - AZURE_COSMOS_DATABASE_ID
+      - AZURE_COSMOS_CONTAINER_ID
+  ai-foundry:
+    service: azureaiservices
+    connection: secret
+    env:
+      - AZURE_AI_FOUNDRY_ENDPOINT
+      - AZURE_AI_FOUNDRY_KEY
+      - AZURE_AI_FOUNDRY_DEPLOYMENT_NAME

@@ -5,15 +5,15 @@
 Absolute Realms Dashboard is a full-stack web application for managing and visualizing tasks. It uses:
 
 - **Frontend**: Vanilla JS, Vite, MSAL.js, Firebase JS SDK
-- **Backend**: Node.js, Express, Firestore (via Firebase Admin), OpenAI API
+- **Backend**: Node.js, Express, Azure Cosmos DB, Azure AI Foundry
 - **Authentication**: Azure AD (MSAL)
-- **AI**: OpenAI GPT for task generation
+- **AI**: Azure AI Foundry for task generation
 - **CI/CD**: GitHub Actions, Docker, Azure Static Web Apps
 
 ## Diagram
 
 ```
-[User] <-> [Frontend (Vite, JS, MSAL, Firebase)] <-> [Express API] <-> [Firestore, OpenAI]
+[User] <-> [Frontend (Vite, JS, MSAL)] <-> [Express API] <-> [Azure Cosmos DB, Azure AI Foundry]
 ```
 
 ## Key Components
@@ -27,6 +27,6 @@ Absolute Realms Dashboard is a full-stack web application for managing and visua
 ## Data Flow
 
 1. User signs in with Azure AD (MSAL)
-2. User interacts with tasks (CRUD via Firestore)
-3. User can generate tasks using OpenAI (backend API)
+2. User interacts with tasks (CRUD via Azure Cosmos DB)
+3. User can generate tasks using Azure AI Foundry (backend API)
 4. All data is synced and rendered in the UI

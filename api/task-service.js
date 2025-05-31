@@ -1,42 +1,40 @@
-const admin = require('firebase-admin');
-require('../config/env-loader');
-const { firebaseConfig } = require('../config/firebase-config');
 
-// Initialize Firebase Admin SDK
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    ...firebaseConfig,
-  });
-}
-const db = admin.firestore();
+// Azure Cosmos DB SDK
+const { CosmosClient } = require('@azure/cosmos');
+require('../config/env-loader');
+const cosmosConfig = require('../config/azure-cosmos-config');
+
+const client = new CosmosClient({ endpoint: cosmosConfig.endpoint, key: cosmosConfig.key });
+const database = client.database(cosmosConfig.databaseId);
+const container = database.container(cosmosConfig.containerId);
 
 /** Create a new task document */
 async function createTask(data) {
-  const docRef = await db.collection('tasks').add(data);
-  return docRef;
+  const { resource } = await container.items.create(data);
+  return resource;
 }
 
 /** Update an existing task by ID */
 async function updateTask(id, data) {
-  await db.collection('tasks').doc(id).update(data);
+  // Patch operation for partial update
+  await container.item(id, id).replace({ id, ...data });
 }
 
 /** Get a task by ID */
 async function getTask(id) {
-  const doc = await db.collection('tasks').doc(id).get();
-  return { id: doc.id, ...doc.data() };
+  const { resource } = await container.item(id, id).read();
+  return resource;
 }
 
 /** List all tasks */
 async function listTasks() {
-  const snapshot = await db.collection('tasks').get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const { resources } = await container.items.readAll().fetchAll();
+  return resources;
 }
 
 /** Delete a task by ID */
 async function deleteTask(id) {
-  await db.collection('tasks').doc(id).delete();
+  await container.item(id, id).delete();
 }
 
 module.exports = { createTask, updateTask, getTask, listTasks, deleteTask };

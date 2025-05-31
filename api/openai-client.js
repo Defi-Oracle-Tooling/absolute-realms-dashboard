@@ -1,23 +1,32 @@
-// OpenAI Client Module
-const { Configuration, OpenAIApi } = require('openai');
-// Load environment variables
+// Azure AI Foundry Client Module
+const axios = require('axios');
 require('../config/env-loader');
-
-// Configure OpenAI API
-const configuration = new Configuration({ apiKey: process.env.OPENAI_API_KEY });
-const openai = new OpenAIApi(configuration);
+const foundryConfig = require('../config/azure-ai-foundry-config');
 
 /**
- * Generate text using OpenAI
- * @param {{model?: string, prompt: string, max_tokens?: number, temperature?: number}} options
+ * Generate text using Azure AI Foundry
+ * @param {{deploymentName?: string, prompt: string, max_tokens?: number, temperature?: number}} options
  * @returns {Promise<string>} Generated text
  */
-async function generateText({ model = 'text-davinci-003', prompt, max_tokens = 150, temperature = 0.7 }) {
+async function generateText({ deploymentName = foundryConfig.deploymentName, prompt, max_tokens = 150, temperature = 0.7 }) {
   try {
-    const response = await openai.createCompletion({ model, prompt, max_tokens, temperature });
+    const response = await axios.post(
+      `${foundryConfig.endpoint}/openai/deployments/${deploymentName}/completions?api-version=2024-02-15-preview`,
+      {
+        prompt,
+        max_tokens,
+        temperature
+      },
+      {
+        headers: {
+          'api-key': foundryConfig.apiKey,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
     return response.data.choices[0].text.trim();
   } catch (error) {
-    console.error('OpenAI error:', error);
+    console.error('Azure AI Foundry error:', error.response?.data || error);
     throw error;
   }
 }

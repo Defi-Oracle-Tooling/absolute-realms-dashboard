@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentName": {
+            "value": "${AZURE_ENV_NAME}"
+        },
+        "location": {
+            "value": "${AZURE_LOCATION}"
+        },
+        "resourceGroupName": {
+            "value": "rg-${AZURE_ENV_NAME}"
+        },
+        "AZURE_COSMOS_ENDPOINT": {
+            "value": ""
+        },
+        "AZURE_COSMOS_KEY": {
+            "value": ""
+        },
+        "AZURE_COSMOS_DATABASE_ID": {
+            "value": "tasks-db"
+        },
+        "AZURE_COSMOS_CONTAINER_ID": {
+            "value": "tasks"
+        },
+        "AZURE_AI_FOUNDRY_ENDPOINT": {
+            "value": ""
+        },
+        "AZURE_AI_FOUNDRY_KEY": {
+            "value": ""
+        },
+        "AZURE_AI_FOUNDRY_DEPLOYMENT_NAME": {
+            "value": "gpt-task-gen"
+        },
+        "MSAL_CLIENT_ID": {
+            "value": ""
+        },
+        "MSAL_AUTHORITY": {
+            "value": ""
+        },
+        "MSAL_CLIENT_SECRET": {
+            "value": ""
+        },
+        "API_SCOPE": {
+            "value": ""
+        },
+        "REDIRECT_URI": {
+            "value": ""
+        },
+        "PORT": {
+            "value": "3000"
+        }
+    }
+}

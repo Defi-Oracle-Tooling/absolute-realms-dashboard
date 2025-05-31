@@ -4,7 +4,7 @@
 
 **POST** `/generate-task`
 
-- **Description**: Generates a new task using OpenAI and stores it in Firestore.
+- **Description**: Generates a new task using Azure AI Foundry and stores it in Azure Cosmos DB.
 - **Request Body**:
   ```json
   {
@@ -25,7 +25,7 @@
 
 **PUT** `/update-task/:id`
 
-- **Description**: Updates an existing task in Firestore.
+- **Description**: Updates an existing task in Azure Cosmos DB.
 - **Request Params**:
   - `id`: Task ID to update.
 - **Request Body**:
@@ -45,9 +45,10 @@
 ## Tasks CRUD
 
 ### List Tasks
+
 **GET** `/tasks`
 
-- **Description**: Retrieves all tasks.
+- **Description**: Retrieves all tasks from Azure Cosmos DB.
 - **Response**:
   ```json
   [
@@ -61,9 +62,10 @@
   ```
 
 ### Get Task
+
 **GET** `/tasks/:id`
 
-- **Description**: Retrieves a single task by ID.
+- **Description**: Retrieves a single task by ID from Azure Cosmos DB.
 - **Response**:
   ```json
   {
@@ -75,9 +77,10 @@
   ```
 
 ### Delete Task
+
 **DELETE** `/tasks/:id`
 
-- **Description**: Deletes a task by ID.
+- **Description**: Deletes a task by ID from Azure Cosmos DB.
 - **Response**:
   ```json
   {

@@ -1,7 +1,7 @@
 # Absolute Realms Dashboard
 
 A dashboard for managing and visualizing tasks in Absolute Realms.
-Uses Firebase for backend, Azure AD for auth, and OpenAI for AI generation.
+Uses Azure Cosmos DB for backend, Azure AD for auth, and Azure AI Foundry for AI generation.
 
 ## Setup
 
@@ -14,14 +14,12 @@ Uses Firebase for backend, Azure AD for auth, and OpenAI for AI generation.
 
 The following environment variables are required (see `.env.example`):
 
-**Firebase**
+**Azure Cosmos DB**
 
-- `FIREBASE_API_KEY`
-- `FIREBASE_AUTH_DOMAIN`
-- `FIREBASE_PROJECT_ID`
-- `FIREBASE_STORAGE_BUCKET`
-- `FIREBASE_MESSAGING_SENDER_ID`
-- `FIREBASE_APP_ID`
+- `AZURE_COSMOS_ENDPOINT`
+- `AZURE_COSMOS_KEY`
+- `AZURE_COSMOS_DATABASE_ID`
+- `AZURE_COSMOS_CONTAINER_ID`
 
 **Azure AD / MSAL**
 
@@ -30,15 +28,17 @@ The following environment variables are required (see `.env.example`):
 - `API_SCOPE` (e.g., `api://<client-id>/.default`)
 - `REDIRECT_URI` (e.g., `http://localhost:3000`)
 
-**OpenAI**
+**Azure AI Foundry**
 
-- `OPENAI_API_KEY`
+- `AZURE_AI_FOUNDRY_ENDPOINT`
+- `AZURE_AI_FOUNDRY_KEY`
+- `AZURE_AI_FOUNDRY_DEPLOYMENT_NAME`
 
 **Server**
 
 - `PORT` (default: 3000)
 
-See `.env.example` for a template. All variables must be set for the backend and frontend to function correctly.
+See `.env.example` for a template. All variables must be set for the backend and frontend to function correctly. Firebase and OpenAI variables are no longer required.
 
 # absolute-realms-dashboard
 
@@ -56,7 +56,7 @@ See `.env.example` for a template. All variables must be set for the backend and
 
 ## Project Structure
 
-- `api/` - Express backend, endpoints, auth, OpenAI
+- `api/` - Express backend, endpoints, auth, Azure AI Foundry, Azure Cosmos DB
 - `src/scripts/` - Frontend JS (auth, Firestore, UI, AI)
 - `config/` - Config files for env, Firebase, MSAL
 - `tests/` - Vitest unit/integration tests
