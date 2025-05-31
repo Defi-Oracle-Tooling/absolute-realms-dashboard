@@ -1,4 +1,3 @@
-````markdown
 # TODO: Absolute Realms Dashboard
 
 ## Priority 1: Core Server & API
@@ -44,8 +43,3 @@
 - [ ] Extend CI (`.github/workflows/ci.yml`) to include build, lint, unit tests, and E2E tests.
 - [ ] Configure Docker multi-stage build with test and production stages.
 - [ ] Add deployment step for Azure Static Web Apps or GitHub Pages.
-
-```markdown
-
-```
-````
